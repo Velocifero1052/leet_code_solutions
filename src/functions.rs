@@ -444,3 +444,93 @@ fn repeated_n_times(nums: Vec<i32>) -> i32{
 
     return number;
 }
+
+//8
+fn target_indices(nums: Vec<i32>, target: i32) -> Vec<i32> {
+    let mut indexes:Vec<i32> = Vec::new();
+    let mut array_to_sort = nums;
+
+    array_to_sort.sort();
+
+    println!("{:?}", array_to_sort);
+
+    let mut i:usize = 0;
+
+    while i < array_to_sort.len(){
+        if array_to_sort[i] == target{
+            indexes.push(i as i32);
+        }
+
+        i += 1;
+    }
+
+    return indexes;
+}
+
+//9
+fn max_product(nums: Vec<i32>) -> i32 {
+    let mut max_product:i32 = 0;
+
+    let mut first_max =  0;
+    let mut first_max_index = 0;
+    let mut i:usize = 0;
+
+    while i < nums.len(){
+        if nums[i] > first_max{
+            first_max = nums[i];
+            first_max_index = i;
+        }
+        i += 1;
+    }
+
+    let mut second_max = 0;
+    i = 0;
+    while i < nums.len(){
+        if nums[i] > second_max && first_max_index != i{
+            second_max = nums[i];
+        }
+
+        i += 1;
+    }
+    max_product = (first_max - 1) * (second_max - 1);
+    return max_product;
+}
+
+//10
+fn find_gcd(nums: Vec<i32>) -> i32 {
+    let mut i = 0;
+    let mut min = nums[0];
+    let mut max = 0;
+
+    while i < nums.len(){
+        if nums[i] < min{
+            min = nums[i];
+        }
+        if nums[i] > max{
+            max = nums[i];
+        }
+        i += 1;
+    }
+
+    return gcd(min, max);
+}
+
+fn gcd(a: i32, b: i32) -> i32{
+
+    if a == 0{
+        return b;
+    }
+
+    if b == 0{
+        return a;
+    }
+
+    if a == b{
+        return a;
+    }
+
+    if a > b {
+        return gcd(a - b, b);
+    }
+    return gcd(a, b - a);
+}

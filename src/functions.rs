@@ -588,3 +588,231 @@ fn max_in_column(matrix: &Vec<Vec<i32>>, column: usize) -> i32{
 
     return max_in_column;
 }
+
+use std::collections::HashMap;
+
+fn count_good_triplets(nums: Vec<i32>, a: i32, b: i32, c: i32) -> i32 {
+    let mut count = 0;
+
+    let mut i:usize = 0;
+
+    while i < nums.len() - 3{
+        let mut j: usize = i + 1;
+        while j < nums.len() - 2{
+            let mut k: usize = j + 1;
+
+            while k < nums.len() - 1{
+                let mut d: usize = k + 1;
+
+                while d < nums.len(){
+
+                    if nums[i] + nums[j] + nums[k] == nums[d]{
+                        count += 1;
+                    }
+
+                    d += 1;
+                }
+                k += 1;
+            }
+            j += 1;
+        }
+        i += 1;
+    }
+
+    return count;
+}
+
+fn sorted_squares(nums: Vec<i32>) -> Vec<i32> {
+
+    let mut i: usize = 0;
+    let mut new_nums = nums.clone();
+
+    while i < new_nums.len(){
+        new_nums[i] = new_nums[i] * new_nums[i];
+        i += 1;
+    }
+    new_nums.sort();
+
+    return new_nums;
+}
+
+fn merge(nums1: &mut Vec<i32>, m: i32, nums2: &mut Vec<i32>, n: i32) {
+
+    let mut i:usize = m as usize;
+
+    while i < (m + n) as usize{
+        nums1[i] = nums2[i - m as usize];
+        i += 1;
+    }
+    nums1.sort();
+}
+
+fn single_number(nums: Vec<i32>) -> i32 {
+    let num: i32 = 0;
+    let mut i: usize = 0;
+    let mut map:HashMap<i32, usize> = HashMap::new();
+
+    while i < nums.len(){
+
+        let opt = map.get_mut(&nums[i]);
+
+        match opt{
+            Some(value) => *value += 1,
+            None => {map.insert(nums[i], 1);},
+        }
+
+        i += 1;
+    }
+
+    for (k, v) in map.iter(){
+        if *v == 1{
+            return *k;
+        }
+    }
+
+    return 0;
+}
+
+fn find_final_value(nums: Vec<i32>, original: i32) -> i32 {
+    let mut i:usize = 0;
+    let mut base:i32 = original;
+
+    while i < nums.len(){
+
+        if nums[i] == base{
+            base *= 2;
+            i = 0;
+            continue;
+        }
+
+        i += 1;
+    }
+
+    return base;
+}
+
+
+fn peak_index_in_mountain_array(arr: Vec<i32>) -> i32 {
+    let mut i:usize = 1;
+
+    while i < arr.len() - 1{
+        if arr[i - 1] < arr[i] && arr[i] > arr[i + 1]{
+            return i as i32;
+        }
+        i += 1;
+    }
+
+    return i as i32;
+}
+
+fn busy_student(start_time: Vec<i32>, end_time: Vec<i32>, query_time: i32) -> i32 {
+    let mut i:usize = 0;
+    let mut count:i32 = 0;
+
+    while i <start_time.len() && i < end_time.len(){
+        if start_time[i] <= query_time || query_time <= end_time[i] {
+            count += 1;
+        }
+
+        i += 1;
+    }
+
+    return count;
+}
+
+fn two_out_of_three(nums1: Vec<i32>, nums2: Vec<i32>, nums3: Vec<i32>) -> Vec<i32> {
+    let mut res:Vec<i32> = Vec::new();
+    let mut i:usize = 0;
+
+    let mut a = nums1;
+    let mut b = nums2;
+    let mut c = nums3;
+
+    a.sort();
+    b.sort();
+    c.sort();
+
+
+    while i < a.len(){
+        let res = b.binary_search(&a[i]);
+
+
+    }
+
+    return res;
+}
+
+
+pub fn can_be_equal(target: Vec<i32>, arr: Vec<i32>) -> bool {
+    if target.len() != arr.len(){
+        return false;
+    }
+
+    let mut copy1 = target;
+    let mut copy2 = arr;
+    copy1.sort();
+    copy2.sort();
+
+    let mut i:usize = 0;
+    while i < copy2.len(){
+        if copy1[i] != copy2[i]{
+            return false;
+        }
+    }
+
+    return true;
+}
+use std::cmp;
+fn third_max(nums: Vec<i32>) -> i32 {
+
+    if nums.len() == 1{
+        return nums[0];
+    }
+
+    if nums.len() == 2{
+        return cmp::max(nums[0], nums[1]);
+    }
+
+    let mut max:i32 = i32::MIN;
+    let mut i:usize = 0;
+    let mut max_index:usize = 0;
+    while i < nums.len(){
+        if nums[i] > max{
+            max = nums[i];
+            max_index = i;
+        }
+        i += 1;
+    }
+
+    i = 0;
+    let mut second_max:i32 = i32::MIN;
+    let mut second_max_index:usize = 0;
+    let mut found:bool = false;
+    while i < nums.len(){
+        if nums[i] >= second_max && nums[i] < max && i != max_index{
+            second_max = nums[i];
+            second_max_index = i;
+            found = true;
+        }
+        i += 1;
+    }
+    if !found{
+        return max;
+    }
+
+    i = 0;
+    let mut third_max:i32 = i32::MIN;
+    found = false;
+    while i < nums.len(){
+        if nums[i] < second_max && nums[i] < max && i != second_max_index && i != max_index && nums[i] >= third_max{
+            third_max = nums[i];
+            found = true;
+        }
+        i += 1;
+    }
+    if !found{
+        return max;
+    }
+
+    return third_max;
+}
